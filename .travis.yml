@@ -1,3 +1,5 @@
+env:
+  - SWIFT_VERSION=2.2
 language: node_js
 os: osx
 osx_image: xcode8.2
@@ -5,8 +7,9 @@ node_js:
 - '6'
 before_install:
 - export LANG=en_US.UTF-8
-- npm install -g grunt cordova
+- npm install -g grunt cordova 
 install:
+- eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
 - npm run apply:bitpay
 - npm run build:ios
 deploy:
