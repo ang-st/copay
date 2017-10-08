@@ -1,12 +1,21 @@
-sudo: required
-dist: trusty
 language: node_js
+os: osx
+osx_image: xcode7
 node_js:
-  - '6'
+- '6'
 before_install:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- export LANG=en_US.UTF-8
+- npm install -g grunt cordova
 install:
-  - npm run apply:bitpay
-# after_success:
-#   - npm run exec:coveralls
+- npm run apply:bitpay
+- npm run build:ios
+deploy:
+  provider: releases
+  file_glob: true
+  skip_cleanup: true
+  api_key:
+    secure: f16Zt951SzH178zxmpD85drF0RrJSbgI45vjSMVNbbbTQeH/HAUxAyeSqHRXgXl0tV91/MJBlJy1ZGpNgZjy32KA+y4hDo0xyCqJLwZMFPOuHSwRM6bHWwTzmgwW8PveX7D0vJd6BmcKVJ8Dc8CKNQGSjKuxFUFdeRA87qnyASqHEncyL/BTz+2I1lLs+GTPdy/B/qQQOp5J2Zd/aFYWPBG3UDHYwP/A9odg+Rh4wsnyp6G1r6feh1ToYd1zAA6orZcF4ReV0NH5r/D6wnhSJWflNTM8FDK/9Nq78rmTDTBXAs4PfNFZ3urMQdtBQy5TZOmBHO5Dih1MsQE83DT4lA7H+5MHYwELrTlL5VbAsjNvBYEkx94ZWHvlTmSZOJtJcbVBibJEHnf6yfCuuAeAML8/fB/fLkHTpW9o8tnJAnWtKP+IkkPkRBbyV966AYySW8ULHmBQkkXScw84GOcy7k00GzFx3GNLJfWBWSKShfzFEQD1+Fw5OE05/6BUJGYmBmK4+TQkFZ7XWMsXrS1JsfSEfAWPS35+rrgeaTuTYjEEPydEuyhi1cE11PYcW9IVwgOJ8HKQL0KIDvFe3f86JNhK8kw2bLFjhPqn6tSynCHvYYwUH2NKCC0zDTsBm/GPoULUjYIe3LZMXndi9FsjPmKm+tKuKFcxNKp4Gy+WNFI=
+  file: "./dist/*/**"
+  on:
+    tags: true
+    repo: ang-st/copay

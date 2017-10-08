@@ -1,8 +1,7 @@
-'use strict';
+'use strict'
 
-module.exports = function(grunt) {
-
-  require('load-grunt-tasks')(grunt);
+module.exports = function (grunt) {
+  require('load-grunt-tasks')(grunt)
 
   // Project Configuration
   grunt.initConfig({
@@ -24,58 +23,65 @@ module.exports = function(grunt) {
         command: 'sh webkitbuilds/build-macos.sh sign'
       },
       coveralls: {
-        command: 'cat  coverage/report-lcov/lcov.info |./node_modules/coveralls/bin/coveralls.js'
+        command:
+          'cat  coverage/report-lcov/lcov.info |./node_modules/coveralls/bin/coveralls.js'
       },
       chrome: {
         command: 'make -C chrome-app '
       },
       wpinit: {
-        command: 'make -C cordova wp-init',
+        command: 'make -C cordova wp-init'
       },
       wpcopy: {
-        command: 'make -C cordova wp-copy',
+        command: 'make -C cordova wp-copy'
       },
       iosdebug: {
-        command: 'npm run build:ios',
+        command: 'npm run build:ios'
       },
       ios: {
-        command: 'npm run build:ios-release',
+        command: 'npm run build:ios-release'
       },
       xcode: {
-        command: 'npm run open:ios',
+        command: 'npm run open:ios'
       },
       androiddebug: {
-        command: 'npm run build:android',
+        command: 'npm run build:android'
       },
       android: {
-        command: 'npm run build:android-release',
+        command: 'npm run build:android-release'
       },
       androidrun: {
-        command: 'npm run run:android && npm run log:android',
+        command: 'npm run run:android && npm run log:android'
       },
       androidbuild: {
-        command: 'cd cordova/project && cordova build android --release',
+        command: 'cd cordova/project && cordova build android --release'
       },
       androidsign: {
-        command: 'rm -f cordova/project/platforms/android/build/outputs/apk/android-release-signed-aligned.apk; jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../copay.keystore -signedjar cordova/project/platforms/android/build/outputs/apk/android-release-signed.apk  cordova/project/platforms/android/build/outputs/apk/android-release-unsigned.apk copay_play && ../android-sdk-macosx/build-tools/21.1.1/zipalign -v 4 cordova/project/platforms/android/build/outputs/apk/android-release-signed.apk cordova/project/platforms/android/build/outputs/apk/android-release-signed-aligned.apk ',
-        stdin: true,
+        command:
+          'rm -f cordova/project/platforms/android/build/outputs/apk/android-release-signed-aligned.apk; jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../copay.keystore -signedjar cordova/project/platforms/android/build/outputs/apk/android-release-signed.apk  cordova/project/platforms/android/build/outputs/apk/android-release-unsigned.apk copay_play && ../android-sdk-macosx/build-tools/21.1.1/zipalign -v 4 cordova/project/platforms/android/build/outputs/apk/android-release-signed.apk cordova/project/platforms/android/build/outputs/apk/android-release-signed-aligned.apk ',
+        stdin: true
       },
       desktopsign: {
-        cmd: 'gpg -u 1112CFA1 --output webkitbuilds/<%= pkg.title %>-linux.zip.sig --detach-sig webkitbuilds/<%= pkg.title %>-linux.zip ; gpg -u 1112CFA1 --output webkitbuilds/<%= pkg.title %>.exe.sig --detach-sig webkitbuilds/<%= pkg.title %>.exe'
+        cmd:
+          'gpg -u 1112CFA1 --output webkitbuilds/<%= pkg.title %>-linux.zip.sig --detach-sig webkitbuilds/<%= pkg.title %>-linux.zip ; gpg -u 1112CFA1 --output webkitbuilds/<%= pkg.title %>.exe.sig --detach-sig webkitbuilds/<%= pkg.title %>.exe'
       },
       desktopverify: {
-        cmd: 'gpg --verify webkitbuilds/<%= pkg.title %>-linux.zip.sig webkitbuilds/<%= pkg.title %>-linux.zip; gpg --verify webkitbuilds/<%= pkg.title %>.exe.sig webkitbuilds/<%= pkg.title %>.exe'
+        cmd:
+          'gpg --verify webkitbuilds/<%= pkg.title %>-linux.zip.sig webkitbuilds/<%= pkg.title %>-linux.zip; gpg --verify webkitbuilds/<%= pkg.title %>.exe.sig webkitbuilds/<%= pkg.title %>.exe'
       },
       osxsign: {
-        cmd: 'gpg -u 1112CFA1 --output webkitbuilds/<%= pkg.title %>.dmg.sig --detach-sig webkitbuilds/<%= pkg.title %>.dmg'
-      },
+        cmd:
+          'gpg -u 1112CFA1 --output webkitbuilds/<%= pkg.title %>.dmg.sig --detach-sig webkitbuilds/<%= pkg.title %>.dmg'
+      }
     },
     watch: {
       options: {
-        dateFormat: function(time) {
-          grunt.log.writeln('The watch finished in ' + time + 'ms at ' + (new Date()).toString());
-          grunt.log.writeln('Waiting for more changes...');
-        },
+        dateFormat: function (time) {
+          grunt.log.writeln(
+            'The watch finished in ' + time + 'ms at ' + new Date().toString()
+          )
+          grunt.log.writeln('Waiting for more changes...')
+        }
       },
       sass: {
         files: ['src/sass/**/**/*.scss'],
@@ -95,12 +101,9 @@ module.exports = function(grunt) {
         tasks: ['concat:js']
       },
       gettext: {
-        files: [
-          'i18n/po/*.po',
-          'i18n/po/*.pot'
-        ],
-        tasks: ['nggettext_compile','concat']
-      },
+        files: ['i18n/po/*.po', 'i18n/po/*.pot'],
+        tasks: ['nggettext_compile', 'concat']
+      }
     },
     sass: {
       dist: {
@@ -108,13 +111,15 @@ module.exports = function(grunt) {
           style: 'compact',
           sourcemap: 'none'
         },
-        files: [{
-          expand: true,
-          flatten: true,
-          src: ['src/sass/main.scss'],
-          dest: 'www/css/',
-          ext: '.css'
-        }]
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['src/sass/main.scss'],
+            dest: 'www/css/',
+            ext: '.css'
+          }
+        ]
       }
     },
     concat: {
@@ -185,7 +190,7 @@ module.exports = function(grunt) {
             'src/js/controllers/**/*.js'
           ]
         }
-      },
+      }
     },
     nggettext_compile: {
       all: {
@@ -195,7 +200,7 @@ module.exports = function(grunt) {
         files: {
           'src/js/translations.js': ['i18n/po/*.po']
         }
-      },
+      }
     },
     copy: {
       ionic_fonts: {
@@ -211,14 +216,20 @@ module.exports = function(grunt) {
         dest: 'www/lib/'
       },
       linux: {
-        files: [{
-          expand: true,
-          cwd: 'webkitbuilds/',
-          src: ['.desktop', '../www/img/app/favicon.ico', '../resources/<%= pkg.name %>/linux/512x512.png'],
-          dest: 'webkitbuilds/<%= pkg.title %>/linux64/',
-          flatten: true,
-          filter: 'isFile'
-        }],
+        files: [
+          {
+            expand: true,
+            cwd: 'webkitbuilds/',
+            src: [
+              '.desktop',
+              '../www/img/app/favicon.ico',
+              '../resources/<%= pkg.name %>/linux/512x512.png'
+            ],
+            dest: 'webkitbuilds/<%= pkg.title %>/linux64/',
+            flatten: true,
+            filter: 'isFile'
+          }
+        ]
       }
     },
     nwjs: {
@@ -230,10 +241,10 @@ module.exports = function(grunt) {
         macIcns: './resources/<%= pkg.name %>/mac/app.icns',
         exeIco: './www/img/app/logo.ico',
         macPlist: {
-          'CFBundleURLTypes': [
+          CFBundleURLTypes: [
             {
-              'CFBundleURLName': 'URI Handler',
-              'CFBundleURLSchemes': ['bitcoin', '<%= pkg.name %>']
+              CFBundleURLName: 'URI Handler',
+              CFBundleURLSchemes: ['bitcoin', '<%= pkg.name %>']
             }
           ]
         }
@@ -254,30 +265,49 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         files: {
-          'angular-bitcore-wallet-client/angular-bitcore-wallet-client.js': ['angular-bitcore-wallet-client/index.js'],
+          'angular-bitcore-wallet-client/angular-bitcore-wallet-client.js': [
+            'angular-bitcore-wallet-client/index.js'
+          ],
           'angular-bitauth/angular-bitauth.js': ['angular-bitauth/index.js']
-        },
+        }
       }
     }
-  });
+  })
 
-  grunt.registerTask('default', ['nggettext_compile', 'exec:appConfig', 'exec:externalServices', 'browserify', 'sass', 'concat', 'copy:ionic_fonts', 'copy:ionic_js']);
-  grunt.registerTask('prod', ['default', 'uglify']);
-  grunt.registerTask('translate', ['nggettext_extract']);
-  grunt.registerTask('desktop', ['prod', 'nwjs', 'copy:linux', 'compress:linux']);
-  grunt.registerTask('osx', ['prod', 'nwjs', 'exec:macos', 'exec:osxsign']);
-  grunt.registerTask('osx-debug', ['default', 'nwjs']);
-  grunt.registerTask('chrome', ['default','exec:chrome']);
-  grunt.registerTask('wp', ['prod', 'exec:wp']);
-  grunt.registerTask('wp-copy', ['default', 'exec:wpcopy']);
-  grunt.registerTask('wp-init', ['default', 'exec:wpinit']);
-  grunt.registerTask('ios', ['exec:ios']);
-  grunt.registerTask('ios-debug', ['exec:iosdebug']);
-  grunt.registerTask('ios-run', ['exec:xcode']);
-  grunt.registerTask('cordovaclean', ['exec:cordovaclean']);
-  grunt.registerTask('android-debug', ['exec:androiddebug', 'exec:androidrun']);
-  grunt.registerTask('android', ['exec:android']);
-  grunt.registerTask('android-release', ['prod', 'exec:android', 'exec:androidsign']);
-  grunt.registerTask('desktopsign', ['exec:desktopsign', 'exec:desktopverify']);
-
-};
+  grunt.registerTask('default', [
+    'nggettext_compile',
+    'exec:appConfig',
+    'exec:externalServices',
+    'browserify',
+    'sass',
+    'concat',
+    'copy:ionic_fonts',
+    'copy:ionic_js'
+  ])
+  grunt.registerTask('prod', ['default', 'uglify'])
+  grunt.registerTask('translate', ['nggettext_extract'])
+  grunt.registerTask('desktop', [
+    'prod',
+    'nwjs',
+    'copy:linux',
+    'compress:linux'
+  ])
+  grunt.registerTask('osx', ['prod', 'nwjs', 'exec:macos', 'exec:osxsign'])
+  grunt.registerTask('osx-debug', ['default', 'nwjs'])
+  grunt.registerTask('chrome', ['default', 'exec:chrome'])
+  grunt.registerTask('wp', ['prod', 'exec:wp'])
+  grunt.registerTask('wp-copy', ['default', 'exec:wpcopy'])
+  grunt.registerTask('wp-init', ['default', 'exec:wpinit'])
+  grunt.registerTask('ios', ['exec:ios'])
+  grunt.registerTask('ios-debug', ['exec:iosdebug'])
+  grunt.registerTask('ios-run', ['exec:xcode'])
+  grunt.registerTask('cordovaclean', ['exec:cordovaclean'])
+  grunt.registerTask('android-debug', ['exec:androiddebug', 'exec:androidrun'])
+  grunt.registerTask('android', ['exec:android'])
+  grunt.registerTask('android-release', [
+    'prod',
+    'exec:android',
+    'exec:androidsign'
+  ])
+  grunt.registerTask('desktopsign', ['exec:desktopsign', 'exec:desktopverify'])
+}
