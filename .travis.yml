@@ -1,6 +1,5 @@
 language: node_js
 os: osx
-osx_image: xcode7
 node_js:
 - '6'
 before_install:
